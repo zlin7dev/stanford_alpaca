@@ -1,3 +1,4 @@
+import os
 from importlib import reload
 
 import transformers
@@ -10,7 +11,18 @@ reload(_settings)
 from huggingface_hub import snapshot_download
 from transformers.trainer_pt_utils import get_module_class_from_name
 
-snapshot_download(repo_id='decapoda-research/llama-7b-hf', local_dir=_settings.MODEL_PATH)
+json_file = os.path.join(_settings.MODEL_PATH, 'tokenizer_config.json')
+
+if not os.path.isfile(json_file):
+        snapshot_download(repo_id='decapoda-research/llama-7b-hf', local_dir=_settings.MODEL_PATH)
+
+import json
+
+with open(json_file) as fin:
+        dd = json.load(fin)
+dd.update({"tokenizer_class": "LlamaTokenizer"})
+with open(json_file, 'w') as fout:
+        json.dump(dd, fout)
 
 
 if True:
