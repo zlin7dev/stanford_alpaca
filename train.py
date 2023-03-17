@@ -15,7 +15,7 @@
 import copy
 import logging
 from dataclasses import dataclass, field
-from typing import Optional, Dict, Sequence
+from typing import Dict, Optional, Sequence
 
 import torch
 import transformers
@@ -23,6 +23,7 @@ from torch.utils.data import Dataset
 from transformers import Trainer
 
 import utils
+from _settings import MODEL_PATH
 
 IGNORE_INDEX = -100
 DEFAULT_PAD_TOKEN = "[PAD]"
@@ -194,12 +195,12 @@ def train():
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
     model = transformers.AutoModelForCausalLM.from_pretrained(
-        model_args.model_name_or_path,
+        MODEL_PATH,
         cache_dir=training_args.cache_dir,
     )
 
     tokenizer = transformers.AutoTokenizer.from_pretrained(
-        model_args.model_name_or_path,
+        MODEL_PATH,
         cache_dir=training_args.cache_dir,
         model_max_length=training_args.model_max_length,
         padding_side="right",
