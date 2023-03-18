@@ -43,3 +43,17 @@ if True:
 
 
         transformer_cls = get_module_class_from_name(model, 'LlamaDecoderLayer')
+
+"""
+full_completion = model_current.generate(
+    inputs=input_ids,
+    attention_mask=attention_mask,
+    temperature=0.7,
+    top_p=0.9,
+    do_sample=True,
+    num_beams=1,
+    max_new_tokens=600,
+    eos_token_id=tokenizer.eos_token_id,
+    pad_token_id=tokenizer.pad_token_id,
+)
+"""
